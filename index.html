@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>English Master LMS - Đủ Dạng Bài & Cloze Test</title>
+    <title>English Master LMS - Đồng Bộ Mã Đề & Làm Bài Tập Online</title>
     <!-- Tailwind CSS CDN -->
     <script src="https://cdn.tailwindcss.com"></script>
     <!-- FontAwesome Icons -->
@@ -42,7 +42,7 @@
                     </div>
                     <div>
                         <span class="text-xl font-extrabold tracking-tight gradient-text">EnglishMaster LMS</span>
-                        <span class="block text-[10px] font-semibold text-slate-400 uppercase tracking-wider">Luyện Thi THPT - Đầy Đủ Dạng Bài & Cloze Test</span>
+                        <span class="block text-[10px] font-semibold text-slate-400 uppercase tracking-wider">Hệ Thống Đề Thi & Bài Tập Online Theo Mã</span>
                     </div>
                 </div>
 
@@ -109,7 +109,7 @@
                 <div class="space-y-2 max-w-xl">
                     <span class="px-3 py-1 bg-white/20 rounded-full text-xs font-semibold tracking-wide uppercase backdrop-blur-md">Giao Diện Học Sinh</span>
                     <h1 class="text-2xl md:text-3xl font-extrabold">Chào mừng <span id="st-welcome-name">Học sinh</span>! 👋</h1>
-                    <p class="text-blue-100 text-sm leading-relaxed">Ôn luyện đầy đủ dạng bài: Đọc đục lỗ (Cloze Test), Đọc hiểu, Đồng/Trái nghĩa, Viết lại câu & Dịch thuật!</p>
+                    <p class="text-blue-100 text-sm leading-relaxed">Nhập mã đề bài tập do giáo viên giao hoặc tự chọn chuyên đề ôn luyện ngay bên dưới!</p>
                 </div>
                 <div class="flex gap-3 bg-white/10 p-4 rounded-2xl backdrop-blur-md border border-white/20 text-center">
                     <div class="px-2"><div class="text-2xl font-black text-amber-300" id="st-stat-xp">0</div><div class="text-[10px] font-semibold text-blue-100">Điểm XP</div></div>
@@ -117,6 +117,16 @@
                     <div class="px-2"><div class="text-2xl font-black text-orange-400" id="st-stat-streak">0 🔥</div><div class="text-[10px] font-semibold text-blue-100">Chuỗi Ngày Học</div></div>
                     <div class="w-px bg-white/20"></div>
                     <div class="px-2"><div class="text-2xl font-black text-emerald-300" id="st-stat-rank">#--</div><div class="text-[10px] font-semibold text-blue-100">Thứ Hạng</div></div>
+                </div>
+            </div>
+
+            <!-- TÍNH NĂNG MỚI: NHẬP MÃ ĐỀ BÀI TẬP DO GV GIAO -->
+            <div class="bg-gradient-to-r from-amber-500 to-orange-600 p-6 rounded-2xl text-white shadow-lg space-y-3 max-w-2xl mx-auto">
+                <h3 class="text-lg font-bold flex items-center gap-2"><i class="fa-solid fa-key"></i> LÀM BÀI TẬP THEO MÃ ĐỀ GIÁO VIÊN GIAO</h3>
+                <p class="text-xs text-amber-100">Dán Mã Đề (hoặc Chuỗi Mã Đề) mà giáo viên đã gửi cho bạn vào đây để mở đúng đề bài làm online:</p>
+                <div class="flex gap-2">
+                    <input type="text" id="st-input-exam-code" placeholder="Dán mã đề vào đây..." class="flex-1 p-3 text-sm rounded-xl border-none text-slate-800 font-mono font-bold focus:ring-2 focus:ring-white">
+                    <button onclick="loadAssignmentByCode()" class="px-5 py-3 bg-slate-900 hover:bg-black text-white font-bold text-xs rounded-xl shadow transition whitespace-nowrap"><i class="fa-solid fa-paper-plane mr-1"></i> MỞ ĐỀ THI</button>
                 </div>
             </div>
 
@@ -131,7 +141,7 @@
             <!-- MODULE QUIZ CÁC DẠNG -->
             <div id="st-sec-quiz" class="space-y-6">
                 <div class="bg-white p-6 rounded-2xl border border-slate-200 shadow-sm space-y-4 max-w-2xl mx-auto">
-                    <h3 class="text-lg font-bold text-slate-800 flex items-center gap-2"><i class="fa-solid fa-sliders text-brand-600"></i> Ôn Luyện Theo Dạng Bài & Chuyên Đề</h3>
+                    <h3 class="text-lg font-bold text-slate-800 flex items-center gap-2"><i class="fa-solid fa-sliders text-brand-600"></i> Ôn Luyện Tự Chọn Tự Do</h3>
                     <div>
                         <label class="block text-xs font-bold text-slate-700 uppercase mb-2">1. Chọn Chuyên Đề / Dạng Bài</label>
                         <select id="st-quiz-category" class="w-full p-3 border border-slate-300 rounded-xl font-semibold text-slate-800 bg-white"></select>
@@ -153,7 +163,6 @@
                         <span class="text-xs font-bold text-amber-600 bg-amber-50 px-3 py-1 rounded-full"><i class="fa-solid fa-bolt"></i> +10 XP/Đúng</span>
                     </div>
                     
-                    <!-- BÀI ĐỌC NẾU CÓ (HỖ TRỢ ĐỌC HIỂU HOẶC CLOZE TEST ĐỤC LỖ) -->
                     <div id="st-quiz-passage-box" class="hidden p-4 bg-amber-50/60 border border-amber-200 rounded-xl text-sm leading-relaxed text-slate-800 max-h-72 overflow-y-auto custom-scrollbar font-serif"></div>
 
                     <div id="st-quiz-content" class="space-y-4"></div>
@@ -268,10 +277,16 @@
                 <div class="flex flex-wrap gap-2">
                     <button onclick="openTeacherAddQModal()" class="px-3 py-2 bg-brand-600 hover:bg-brand-700 text-white font-bold text-xs rounded-xl shadow transition"><i class="fa-solid fa-plus mr-1"></i> Soạn 1 Câu Hỏi</button>
                     <button onclick="openBulkModal()" class="px-3 py-2 bg-amber-500 hover:bg-amber-600 text-white font-bold text-xs rounded-xl shadow transition"><i class="fa-solid fa-paste mr-1"></i> Nhập Hàng Loạt</button>
-                    <button onclick="exportWorksheet()" class="px-3 py-2 bg-indigo-500 hover:bg-indigo-600 text-white font-bold text-xs rounded-xl shadow transition"><i class="fa-solid fa-print mr-1"></i> Tạo File Bài Tập</button>
-                    <button onclick="openTeacherAddEssayModal()" class="px-3 py-2 bg-emerald-600 hover:bg-emerald-700 text-white font-bold text-xs rounded-xl shadow transition"><i class="fa-solid fa-file-circle-plus mr-1"></i> Đề Dịch</button>
-                    <label class="px-3 py-2 bg-slate-800 border border-slate-700 hover:bg-slate-700 text-white font-bold text-xs rounded-xl transition cursor-pointer"><i class="fa-solid fa-upload mr-1"></i> Nạp File <input type="file" accept=".json" class="hidden" onchange="importDataJSON(event)"></label>
-                    <button onclick="exportDataJSON()" class="px-3 py-2 bg-slate-800 border border-slate-700 hover:bg-slate-700 text-white font-bold text-xs rounded-xl transition"><i class="fa-solid fa-download mr-1"></i> Xuất Dữ Liệu</button>
+
+                    <!-- NÚT MỚI: TẠO MÃ ĐỀ LÀM BÀI ONLINE CHO HỌC SINH -->
+                    <button onclick="createOnlineExamCode()" class="px-3 py-2 bg-emerald-600 hover:bg-emerald-700 text-white font-bold text-xs rounded-xl shadow transition"><i class="fa-solid fa-share-nodes mr-1"></i> Tạo Mã Bài Tập Online</button>
+
+                    <!-- NÚT MỚI: TẠO FILE IN / DOWNLOAD -->
+                    <button onclick="exportWorksheet()" class="px-3 py-2 bg-indigo-500 hover:bg-indigo-600 text-white font-bold text-xs rounded-xl shadow transition"><i class="fa-solid fa-print mr-1"></i> In / Xuất File Giấy</button>
+                    
+                    <button onclick="openTeacherAddEssayModal()" class="px-3 py-2 bg-purple-600 hover:bg-purple-700 text-white font-bold text-xs rounded-xl shadow transition"><i class="fa-solid fa-file-circle-plus mr-1"></i> Đề Dịch</button>
+                    <button onclick="copyDataCode()" class="px-3 py-2 bg-slate-800 border border-slate-700 hover:bg-slate-700 text-white font-bold text-xs rounded-xl transition" title="Copy chuỗi mã để dán sang máy khác"><i class="fa-solid fa-copy mr-1"></i> Copy Mã Ngân Hàng</button>
+                    <button onclick="importDataCode()" class="px-3 py-2 bg-slate-800 border border-slate-700 hover:bg-slate-700 text-white font-bold text-xs rounded-xl transition"><i class="fa-solid fa-download mr-1"></i> Nạp Bằng Mã</button>
                 </div>
             </div>
 
@@ -325,8 +340,8 @@
                 </div>
 
                 <div>
-                    <label class="block text-xs font-bold text-slate-700 uppercase mb-1">Đoạn Văn / Bài Đọc Đục Lỗ (Nếu là Cloze Test hoặc Đọc hiểu)</label>
-                    <textarea id="tc-q-input-passage" rows="4" placeholder="Nhập đoạn văn đục lỗ (Ví dụ: Many people (1) [.....] that technology has changed our lives...)" class="w-full p-2.5 text-sm border border-slate-300 rounded-lg bg-slate-50"></textarea>
+                    <label class="block text-xs font-bold text-slate-700 uppercase mb-1">Đoạn Văn / Bài Đọc Đục Lỗ (Nếu có)</label>
+                    <textarea id="tc-q-input-passage" rows="4" placeholder="Nhập đoạn văn đục lỗ..." class="w-full p-2.5 text-sm border border-slate-300 rounded-lg bg-slate-50"></textarea>
                 </div>
 
                 <div>
@@ -335,7 +350,7 @@
                 </div>
 
                 <div class="space-y-2">
-                    <label class="block text-xs font-bold text-slate-700 uppercase">4 Lựa chọn (Có thể là từ đơn hoặc Mệnh đề/Cụm từ dài) *</label>
+                    <label class="block text-xs font-bold text-slate-700 uppercase">4 Lựa chọn *</label>
                     <div class="space-y-2">
                         <div class="flex items-center gap-2"><span class="font-bold text-slate-400">A.</span><input type="text" id="tc-q-opt-0" required class="w-full p-2 text-sm border rounded-lg"></div>
                         <div class="flex items-center gap-2"><span class="font-bold text-slate-400">B.</span><input type="text" id="tc-q-opt-1" required class="w-full p-2 text-sm border rounded-lg"></div>
@@ -356,7 +371,7 @@
     <div id="modal-bulk-import" class="fixed inset-0 bg-slate-900/60 backdrop-blur-sm z-50 hidden flex items-center justify-center p-4">
         <div class="bg-white rounded-2xl max-w-3xl w-full p-6 space-y-4 shadow-2xl">
             <div class="flex justify-between items-center pb-3 border-b border-slate-200">
-                <h3 class="text-lg font-bold text-amber-600"><i class="fa-solid fa-paste"></i> Nhập Ngân Hàng Câu Hỏi Hàng Loạt (Gồm Cloze Test)</h3>
+                <h3 class="text-lg font-bold text-amber-600"><i class="fa-solid fa-paste"></i> Nhập Ngân Hàng Câu Hỏi Hàng Loạt</h3>
                 <button onclick="closeBulkModal()" class="text-slate-400 hover:text-slate-600 text-lg"><i class="fa-solid fa-xmark"></i></button>
             </div>
             <form onsubmit="saveBulkQuestions(event)" class="space-y-4">
@@ -365,15 +380,30 @@
                     <input type="text" id="tc-bulk-cat" required placeholder="VD: Cloze Test, Đồng nghĩa, Viết lại câu..." class="w-full p-2.5 text-sm border border-slate-300 rounded-lg font-bold text-brand-700">
                 </div>
                 <div>
-                    <label class="block text-xs font-bold text-slate-700 uppercase mb-1">Dán Văn Bản Bài Đọc & Câu Hỏi *</label>
-                    <p class="text-[11px] text-slate-500 mb-2">Thêm dòng <code>Bài đọc: [Đoạn văn...]</code> nếu là bài đục lỗ Cloze Test hoặc Đọc hiểu.</p>
-                    <textarea id="tc-bulk-text" required rows="10" class="w-full p-3 text-sm border border-slate-300 rounded-lg font-mono text-xs bg-slate-50" placeholder="Bài đọc: Education plays a vital role in shaping the future. Students who (1) ______ hard will achieve success. Moreover, (2) ______.&#10;&#10;Câu 1: Chọn phương án đúng cho vị trí (1)&#10;A. study&#10;B. studying&#10;C. studied&#10;D. to study&#10;Đáp án: A&#10;Giải thích: Mệnh đề quan hệ chỉ thói quen/sự thật ở hiện tại.&#10;&#10;Câu 2: Chọn phương án đúng cho vị trí (2)&#10;A. which helps them gain more practical knowledge for their future career&#10;B. it is necessary for schools to provide adequate modern facilities&#10;C. although many challenges still remain unsolved in rural areas&#10;D. despite having spent a large amount of money on educational reform&#10;Đáp án: B"></textarea>
+                    <label class="block text-xs font-bold text-slate-700 uppercase mb-1">Dán Văn Bản Câu Hỏi *</label>
+                    <textarea id="tc-bulk-text" required rows="10" class="w-full p-3 text-sm border border-slate-300 rounded-lg font-mono text-xs bg-slate-50" placeholder="Bài đọc: Content...&#10;&#10;Câu 1: Stem...&#10;A. Opt 1&#10;B. Opt 2&#10;C. Opt 3&#10;D. Opt 4&#10;Đáp án: A"></textarea>
                 </div>
                 <div class="flex justify-end gap-2 pt-3 border-t border-slate-200">
                     <button type="button" onclick="closeBulkModal()" class="px-4 py-2 bg-slate-200 text-slate-700 font-bold text-xs rounded-lg">Hủy</button>
                     <button type="submit" class="px-5 py-2 bg-amber-500 hover:bg-amber-600 text-white font-bold text-xs rounded-lg">Phân Tích & Lưu Hàng Loạt</button>
                 </div>
             </form>
+        </div>
+    </div>
+
+    <!-- MODAL HIỂN THỊ MÃ ĐỀ DÀNH CHO GIÁO VIÊN -->
+    <div id="modal-exam-code-show" class="fixed inset-0 bg-slate-900/60 backdrop-blur-sm z-50 hidden flex items-center justify-center p-4">
+        <div class="bg-white rounded-2xl max-w-lg w-full p-6 space-y-4 shadow-2xl text-center">
+            <div class="w-12 h-12 bg-emerald-100 text-emerald-600 rounded-full flex items-center justify-center mx-auto text-xl font-bold">
+                <i class="fa-solid fa-check"></i>
+            </div>
+            <h3 class="text-xl font-extrabold text-slate-800">Tạo Mã Đề Bài Tập Thành Công!</h3>
+            <p class="text-xs text-slate-500">Gửi đoạn mã bên dưới cho học sinh. Các em chỉ cần dán mã này vào ô "LÀM BÀI TẬP THEO MÃ ĐỀ" trên máy của mình là sẽ làm bài được ngay:</p>
+            <textarea id="generated-exam-code-text" readonly rows="4" class="w-full p-3 text-xs font-mono bg-slate-100 border border-slate-300 rounded-xl select-all font-bold text-emerald-800"></textarea>
+            <div class="flex gap-2">
+                <button onclick="copyGeneratedExamCode()" class="flex-1 py-3 bg-emerald-600 hover:bg-emerald-700 text-white font-bold text-xs rounded-xl shadow transition"><i class="fa-solid fa-copy mr-1"></i> Sao Chép Mã Đề</button>
+                <button onclick="document.getElementById('modal-exam-code-show').classList.add('hidden')" class="px-5 py-3 bg-slate-200 text-slate-700 font-bold text-xs rounded-xl">Đóng</button>
+            </div>
         </div>
     </div>
 
@@ -395,7 +425,7 @@
         </div>
     </div>
 
-    <!-- JS ENGINE PHÂN TÍCH & HIỂN THỊ CLOZE TEST -->
+    <!-- JS ENGINE -->
     <script>
         const DEFAULT_USERS = [
             { id: "u_1", name: "Học Sinh Mẫu", role: "student", pass: "123", xp: 100, streak: 3, lastStudyDate: "2026-08-14" },
@@ -406,11 +436,9 @@
         let activeStudentQuiz = { questions: [], userAnswers: [], currentIndex: 0 };
         let mockExamState = { questions: [], userAnswers: [], currentIndex: 0, timerInterval: null, timeLeft: 3000 };
 
-        // Parsing từ in đậm & Cloze Gaps
         function parseHighlightText(text) {
             if (!text) return "";
             let processed = text.replace(/\*\*(.*?)\*\*/g, '<span class="q-highlight">$1</span>');
-            // Đánh dấu các vị trí đục lỗ (1), (2)...
             processed = processed.replace(/\((\d+)\)\s*_{2,}/g, '<span class="cloze-gap">($1) [.....]</span>');
             return processed;
         }
@@ -499,6 +527,39 @@
             document.getElementById('st-tab-' + tab).className = "py-3 px-5 border-b-2 border-brand-600 text-brand-600 flex items-center gap-2 font-bold whitespace-nowrap";
             if (tab === 'leaderboard') renderLeaderboard(); 
             if (tab === 'essay') renderEssayHistory();
+        }
+
+        // TÍNH NĂNG MỚI: MỞ BÀI TẬP BẰNG MÃ ĐỀ GIÁO VIÊN GIAO
+        function loadAssignmentByCode() {
+            const rawCode = document.getElementById('st-input-exam-code').value.trim();
+            if (!rawCode) return alert("Vui lòng dán Mã Đề!");
+
+            try {
+                // Giải mã dữ liệu câu hỏi từ Mã Đề
+                const jsonStr = decodeURIComponent(atob(rawCode));
+                const loadedQuestions = JSON.parse(jsonStr);
+
+                if (!Array.isArray(loadedQuestions) || loadedQuestions.length === 0) {
+                    throw new Error("Mã đề không hợp lệ!");
+                }
+
+                activeStudentQuiz.questions = loadedQuestions.map(q => {
+                    let opts = [...q.options], correctText = opts[q.correctIndex];
+                    for (let i = opts.length - 1; i > 0; i--) { const j = Math.floor(Math.random() * (i + 1)); [opts[i], opts[j]] = [opts[j], opts[i]]; }
+                    return { id: q.id, category: q.category, stem: q.stem, passage: q.passage || "", options: opts, correctIndex: opts.indexOf(correctText) };
+                });
+
+                activeStudentQuiz.userAnswers = new Array(activeStudentQuiz.questions.length).fill(null); 
+                activeStudentQuiz.currentIndex = 0;
+
+                switchStudentTab('quiz');
+                document.getElementById('st-quiz-active-card').classList.remove('hidden'); 
+                renderStudentQuizCard();
+                alert(`Đã nạp thành công Bài Tập Online (${activeStudentQuiz.questions.length} câu). Bắt đầu làm ngay!`);
+
+            } catch (err) {
+                alert("Mã đề không chính xác hoặc đã bị hỏng! Hãy hỏi lại giáo viên.");
+            }
         }
 
         // STUDENT QUIZ
@@ -696,7 +757,7 @@
             document.getElementById('st-stat-rank').innerText = myRank > 0 ? `#${myRank}` : '#--';
         }
 
-        // TEACHER CONTROL
+        // TEACHER CONTROL & CHỨC NĂNG MỚI
         function switchTeacherTab(tab) {
             ['bank', 'essays', 'students'].forEach(t => { document.getElementById('tc-sec-' + t).classList.add('hidden'); document.getElementById('tc-tab-' + t).className = "py-3 px-5 text-slate-500 hover:text-brand-600 flex items-center gap-2 whitespace-nowrap"; });
             document.getElementById('tc-sec-' + tab).classList.remove('hidden'); document.getElementById('tc-tab-' + tab).className = "py-3 px-5 border-b-2 border-brand-600 text-brand-600 flex items-center gap-2 font-bold whitespace-nowrap";
@@ -731,6 +792,56 @@
                     ${q.explanation ? `<div class="text-[11px] text-slate-500 italic bg-slate-100 p-2 rounded">${q.explanation}</div>` : ''}
                 </div>`;
             });
+        }
+
+        // TÍNH NĂNG MỚI: GIÁO VIÊN TẠO MÃ ĐỀ BÀI TẬP ONLINE CHO HỌC SINH
+        function createOnlineExamCode() {
+            const filterCat = document.getElementById('tc-q-cat-filter').value;
+            let targetQuestions = filterCat === 'ALL' ? [...dbQuestions] : dbQuestions.filter(q => q.category === filterCat);
+
+            if (targetQuestions.length === 0) {
+                return alert("Chưa có câu hỏi nào trong chuyên đề này để tạo Mã Đề!");
+            }
+
+            // Mã hóa danh sách câu hỏi thành Chuỗi Mã Ngắn
+            const jsonStr = JSON.stringify(targetQuestions);
+            const encodedCode = btoa(encodeURIComponent(jsonStr));
+
+            document.getElementById('generated-exam-code-text').value = encodedCode;
+            document.getElementById('modal-exam-code-show').classList.remove('hidden');
+        }
+
+        function copyGeneratedExamCode() {
+            const txt = document.getElementById('generated-exam-code-text');
+            txt.select();
+            document.execCommand('copy');
+            alert("Đã sao chép Mã Đề vào Bộ nhớ tạm! Hãy gửi mã này cho học sinh.");
+        }
+
+        // TÍNH NĂNG MỚI: ĐỒNG BỘ DỮ LIỆU GIỮA CÁC MÁY BẰNG CHUỖI MÃ
+        function copyDataCode() {
+            if (dbQuestions.length === 0) return alert("Ngân hàng câu hỏi trống!");
+            const dataStr = JSON.stringify(dbQuestions);
+            const codeStr = btoa(encodeURIComponent(dataStr));
+            navigator.clipboard.writeText(codeStr);
+            alert("Đã sao chép Mã Ngân Hàng Câu Hỏi! Bạn có thể dán mã này sang máy tính/điện thoại khác.");
+        }
+
+        function importDataCode() {
+            const code = prompt("Dán Mã Ngân Hàng Câu Hỏi (hoặc Mã Đề) vào đây:");
+            if (!code) return;
+            try {
+                const jsonStr = decodeURIComponent(atob(code.trim()));
+                const importedQs = JSON.parse(jsonStr);
+                if (Array.isArray(importedQs)) {
+                    dbQuestions = importedQs;
+                    saveDatabase();
+                    renderTeacherQuestionBank();
+                    alert(`Đã nạp thành công ${importedQs.length} câu hỏi vào máy tính này!`);
+                }
+            } catch (err) {
+                alert("Mã không hợp lệ!");
+            }
         }
 
         function openTeacherAddQModal() { 
@@ -800,7 +911,6 @@
         function openBulkModal() { document.getElementById('modal-bulk-import').classList.remove('hidden'); }
         function closeBulkModal() { document.getElementById('modal-bulk-import').classList.add('hidden'); }
         
-        // NHẬP HÀNG LOẠT THÔNG MINH CHO CLOZE TEST
         function saveBulkQuestions(e) {
             e.preventDefault();
             const defaultCat = document.getElementById('tc-bulk-cat').value.trim();
@@ -853,13 +963,14 @@
             alert(`Đã nhập thành công ${added} câu hỏi vào dạng bài "${defaultCat}"!`);
         }
 
+        // TẠO FILE GIẤY IN / DOWNLOAD
         function exportWorksheet() {
             const f = document.getElementById('tc-q-cat-filter').value;
             const pool = f === 'ALL' ? [...dbQuestions] : dbQuestions.filter(q => q.category === f);
             if (pool.length === 0) { alert("Không có câu hỏi nào!"); return; }
 
             let html = `<html><head><meta charset="utf-8"><title>Bài Tập - ${f}</title><style>body{font-family: Arial; line-height: 1.6; max-width: 800px; margin: 0 auto; padding: 20px;} .q{margin-bottom: 20px;} .opts{margin-left: 20px; display: grid; grid-template-columns: 1fr 1fr; gap: 5px;} .q-highlight{font-weight:bold; text-decoration:underline;} .cloze-gap{font-weight:bold; color:#d97706;}</style></head><body>`;
-            html += `<h2 style="text-align:center;">BÀI TẬP BỔ TRỢ - ${f}</h2><hr/><br/>`;
+            html += `<h2 style="text-align:center;">BÀI TẬP BỔ TRỢ (BẢN IN GIẤY) - ${f}</h2><hr/><br/>`;
             
             let lastPassage = "";
             pool.forEach((q, i) => {
@@ -871,7 +982,7 @@
                 ['A', 'B', 'C', 'D'].forEach((char, idx) => { html += `<div>${char}. ${parseHighlightText(q.options[idx])}</div>`; });
                 html += `</div></div>`;
             });
-            html += `<br><hr/><h3>ĐÁP ÁN</h3><div style="column-count: 4;">`;
+            html += `<br><hr/><h3>ĐÁP ÁN BẢN IN</h3><div style="column-count: 4;">`;
             pool.forEach((q, i) => { html += `<div><b>Câu ${i+1}:</b> ${['A', 'B', 'C', 'D'][q.correctIndex]}</div>`; });
             html += `</div></body></html>`;
 
@@ -904,17 +1015,6 @@
         }
 
         function resetSeasonLeaderboard() { if (confirm("Xóa điểm XP của tất cả học sinh?")) { dbUsers.forEach(u => { if (u.role === 'student') u.xp = 0; }); saveDatabase(); renderTeacherPanels(); } }
-        
-        function exportDataJSON() {
-            const data = "data:text/json;charset=utf-8," + encodeURIComponent(JSON.stringify({ users: dbUsers, questions: dbQuestions, essayPrompts: dbEssayPrompts, essays: dbEssays }, null, 2));
-            const a = document.createElement('a'); a.href = data; a.download = `Backup_${new Date().toISOString().slice(0, 10)}.json`; document.body.appendChild(a); a.click(); a.remove();
-        }
-        function importDataJSON(e) {
-            const file = e.target.files[0]; if (!file) return; const r = new FileReader();
-            r.onload = function(ev) {
-                try { const data = JSON.parse(ev.target.result); if(data.questions) dbQuestions = data.questions; if(data.users) dbUsers = data.users; if(data.essayPrompts) dbEssayPrompts = data.essayPrompts; if(data.essays) dbEssays = data.essays; saveDatabase(); navigateRoleView(); alert("Nạp thành công!"); } catch (err) { alert("Lỗi file: " + err.message); }
-            }; r.readAsText(file);
-        }
     </script>
 </body>
 </html>
