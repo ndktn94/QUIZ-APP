@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>English Master LMS - Đủ Dạng Bài Luyện Thi THPT</title>
+    <title>English Master LMS - Đủ Dạng Bài & Cloze Test</title>
     <!-- Tailwind CSS CDN -->
     <script src="https://cdn.tailwindcss.com"></script>
     <!-- FontAwesome Icons -->
@@ -26,8 +26,8 @@
         .custom-scrollbar::-webkit-scrollbar { width: 6px; }
         .custom-scrollbar::-webkit-scrollbar-track { background: #f1f5f9; }
         .custom-scrollbar::-webkit-scrollbar-thumb { background: #cbd5e1; border-radius: 4px; }
-        /* Style cho từ in đậm gạch chân */
         .q-highlight { font-weight: 800; text-decoration: underline; color: #1d4ed8; background-color: #f0f6ff; padding: 2px 6px; border-radius: 4px; }
+        .cloze-gap { font-weight: 800; color: #d97706; background-color: #fef3c7; border: 1px dashed #f59e0b; padding: 2px 8px; border-radius: 6px; }
     </style>
 </head>
 <body class="bg-slate-50 text-slate-800 font-sans min-h-screen flex flex-col">
@@ -42,7 +42,7 @@
                     </div>
                     <div>
                         <span class="text-xl font-extrabold tracking-tight gradient-text">EnglishMaster LMS</span>
-                        <span class="block text-[10px] font-semibold text-slate-400 uppercase tracking-wider">Hệ Thống Luyện Thi Tiếng Anh Đa Dạng Bài Tập</span>
+                        <span class="block text-[10px] font-semibold text-slate-400 uppercase tracking-wider">Luyện Thi THPT - Đầy Đủ Dạng Bài & Cloze Test</span>
                     </div>
                 </div>
 
@@ -109,7 +109,7 @@
                 <div class="space-y-2 max-w-xl">
                     <span class="px-3 py-1 bg-white/20 rounded-full text-xs font-semibold tracking-wide uppercase backdrop-blur-md">Giao Diện Học Sinh</span>
                     <h1 class="text-2xl md:text-3xl font-extrabold">Chào mừng <span id="st-welcome-name">Học sinh</span>! 👋</h1>
-                    <p class="text-blue-100 text-sm leading-relaxed">Hệ thống đầy đủ các dạng bài: Đồng/Trái nghĩa, Viết lại câu, Word Formation, Đọc hiểu & Dịch thuật!</p>
+                    <p class="text-blue-100 text-sm leading-relaxed">Ôn luyện đầy đủ dạng bài: Đọc đục lỗ (Cloze Test), Đọc hiểu, Đồng/Trái nghĩa, Viết lại câu & Dịch thuật!</p>
                 </div>
                 <div class="flex gap-3 bg-white/10 p-4 rounded-2xl backdrop-blur-md border border-white/20 text-center">
                     <div class="px-2"><div class="text-2xl font-black text-amber-300" id="st-stat-xp">0</div><div class="text-[10px] font-semibold text-blue-100">Điểm XP</div></div>
@@ -153,8 +153,8 @@
                         <span class="text-xs font-bold text-amber-600 bg-amber-50 px-3 py-1 rounded-full"><i class="fa-solid fa-bolt"></i> +10 XP/Đúng</span>
                     </div>
                     
-                    <!-- BÀI ĐỌC HIỂU NẾU CÓ -->
-                    <div id="st-quiz-passage-box" class="hidden p-4 bg-slate-50 border border-slate-200 rounded-xl text-sm leading-relaxed text-slate-700 max-h-60 overflow-y-auto custom-scrollbar font-serif"></div>
+                    <!-- BÀI ĐỌC NẾU CÓ (HỖ TRỢ ĐỌC HIỂU HOẶC CLOZE TEST ĐỤC LỖ) -->
+                    <div id="st-quiz-passage-box" class="hidden p-4 bg-amber-50/60 border border-amber-200 rounded-xl text-sm leading-relaxed text-slate-800 max-h-72 overflow-y-auto custom-scrollbar font-serif"></div>
 
                     <div id="st-quiz-content" class="space-y-4"></div>
                     <div class="flex justify-between items-center pt-4 border-t border-slate-200">
@@ -171,7 +171,7 @@
                         <i class="fa-solid fa-stopwatch"></i>
                     </div>
                     <h3 class="text-2xl font-extrabold text-slate-800">Thi Thử Tổng Hợp Tất Cả Dạng Bài (50 Phút)</h3>
-                    <p class="text-xs text-slate-500 leading-relaxed">Bao gồm đầy đủ các dạng: Đọc hiểu, Đồng/Trái nghĩa (có từ in đậm), Viết lại câu, Word Formation... Hệ thống tự chẩn đoán điểm yếu sau khi nộp!</p>
+                    <p class="text-xs text-slate-500 leading-relaxed">Bao gồm Đọc đục lỗ (Cloze Test), Đọc hiểu, Đồng/Trái nghĩa, Viết lại câu, Word Formation... Hệ thống tự chẩn đoán điểm yếu sau khi nộp!</p>
                     <button onclick="startFullMockTest()" class="w-full py-4 bg-amber-500 hover:bg-amber-600 text-white font-black text-base rounded-xl shadow-lg transition flex items-center justify-center gap-2">
                         <i class="fa-solid fa-play"></i> BẮT ĐẦU THI THỬ NGAY
                     </button>
@@ -184,8 +184,7 @@
                             <span class="text-xs font-bold text-slate-500 bg-slate-100 px-3 py-1 rounded-full" id="mock-q-cat-tag">Chuyên đề</span>
                         </div>
 
-                        <!-- KHU VỰC BÀI ĐỌC TRONG THI THỬ -->
-                        <div id="mock-passage-box" class="hidden p-4 bg-slate-50 border border-slate-200 rounded-xl text-sm leading-relaxed text-slate-700 max-h-60 overflow-y-auto custom-scrollbar font-serif"></div>
+                        <div id="mock-passage-box" class="hidden p-4 bg-amber-50/60 border border-amber-200 rounded-xl text-sm leading-relaxed text-slate-800 max-h-72 overflow-y-auto custom-scrollbar font-serif"></div>
 
                         <div id="mock-q-display-box" class="space-y-4"></div>
                         <div class="flex justify-between items-center pt-4 border-t border-slate-200">
@@ -304,18 +303,20 @@
         </div>
     </main>
 
-    <!-- MODAL SOẠN 1 CÂU HỎI CÓ BÀI ĐỌC NẾU CẦN -->
+    <!-- MODAL SOẠN / SỬA 1 CÂU HỎI -->
     <div id="modal-teacher-q" class="fixed inset-0 bg-slate-900/60 backdrop-blur-sm z-50 hidden flex items-center justify-center p-4">
         <div class="bg-white rounded-2xl max-w-2xl w-full p-6 space-y-4 shadow-2xl max-h-[90vh] overflow-y-auto custom-scrollbar">
             <div class="flex justify-between items-center pb-3 border-b border-slate-200">
-                <h3 class="text-lg font-bold text-slate-800">Soạn 1 Câu Hỏi Mới</h3>
+                <h3 class="text-lg font-bold text-slate-800" id="modal-teacher-q-title">Soạn 1 Câu Hỏi Mới</h3>
                 <button onclick="closeTeacherAddQModal()" class="text-slate-400 hover:text-slate-600 text-lg"><i class="fa-solid fa-xmark"></i></button>
             </div>
             <form onsubmit="saveTeacherQuestion(event)" class="space-y-4">
+                <input type="hidden" id="tc-q-edit-id" value="">
+                
                 <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
                     <div>
                         <label class="block text-xs font-bold text-slate-700 uppercase mb-1">Dạng Bài / Chuyên Đề *</label>
-                        <input type="text" id="tc-q-input-cat" required placeholder="VD: Đồng nghĩa, Trái nghĩa, Word Formation, Đọc hiểu..." class="w-full p-2.5 text-sm border border-slate-300 rounded-lg">
+                        <input type="text" id="tc-q-input-cat" required placeholder="VD: Cloze Test (Đục lỗ), Đồng nghĩa, Viết lại câu..." class="w-full p-2.5 text-sm border border-slate-300 rounded-lg">
                     </div>
                     <div>
                         <label class="block text-xs font-bold text-slate-700 uppercase mb-1">Đáp án đúng *</label>
@@ -324,18 +325,18 @@
                 </div>
 
                 <div>
-                    <label class="block text-xs font-bold text-slate-700 uppercase mb-1">Đoạn Văn Đọc Hiểu (Tùy chọn cho bài Đọc hiểu)</label>
-                    <textarea id="tc-q-input-passage" rows="3" placeholder="Nhập bài đọc (nếu có)..." class="w-full p-2.5 text-sm border border-slate-300 rounded-lg bg-slate-50"></textarea>
+                    <label class="block text-xs font-bold text-slate-700 uppercase mb-1">Đoạn Văn / Bài Đọc Đục Lỗ (Nếu là Cloze Test hoặc Đọc hiểu)</label>
+                    <textarea id="tc-q-input-passage" rows="4" placeholder="Nhập đoạn văn đục lỗ (Ví dụ: Many people (1) [.....] that technology has changed our lives...)" class="w-full p-2.5 text-sm border border-slate-300 rounded-lg bg-slate-50"></textarea>
                 </div>
 
                 <div>
-                    <label class="block text-xs font-bold text-slate-700 uppercase mb-1">Nội dung câu hỏi * (Dùng **từ** để in đậm gạch chân)</label>
-                    <textarea id="tc-q-input-stem" required rows="2" placeholder="VD: The project was **feasible** so we decided to start." class="w-full p-2.5 text-sm border border-slate-300 rounded-lg"></textarea>
+                    <label class="block text-xs font-bold text-slate-700 uppercase mb-1">Nội dung câu hỏi / Vị trí đục lỗ *</label>
+                    <textarea id="tc-q-input-stem" required rows="2" placeholder="VD: Chọn phương án đúng cho vị trí (1)" class="w-full p-2.5 text-sm border border-slate-300 rounded-lg"></textarea>
                 </div>
 
                 <div class="space-y-2">
-                    <label class="block text-xs font-bold text-slate-700 uppercase">4 Lựa chọn *</label>
-                    <div class="grid grid-cols-1 sm:grid-cols-2 gap-2">
+                    <label class="block text-xs font-bold text-slate-700 uppercase">4 Lựa chọn (Có thể là từ đơn hoặc Mệnh đề/Cụm từ dài) *</label>
+                    <div class="space-y-2">
                         <div class="flex items-center gap-2"><span class="font-bold text-slate-400">A.</span><input type="text" id="tc-q-opt-0" required class="w-full p-2 text-sm border rounded-lg"></div>
                         <div class="flex items-center gap-2"><span class="font-bold text-slate-400">B.</span><input type="text" id="tc-q-opt-1" required class="w-full p-2 text-sm border rounded-lg"></div>
                         <div class="flex items-center gap-2"><span class="font-bold text-slate-400">C.</span><input type="text" id="tc-q-opt-2" required class="w-full p-2 text-sm border rounded-lg"></div>
@@ -345,7 +346,7 @@
                 <div><label class="block text-xs font-bold text-slate-700 uppercase mb-1">Giải thích (Tùy chọn)</label><input type="text" id="tc-q-input-exp" class="w-full p-2 text-sm border border-slate-300 rounded-lg"></div>
                 <div class="flex justify-end gap-2 pt-3 border-t border-slate-200">
                     <button type="button" onclick="closeTeacherAddQModal()" class="px-4 py-2 bg-slate-200 text-slate-700 font-bold text-xs rounded-lg">Hủy</button>
-                    <button type="submit" class="px-5 py-2 bg-brand-600 text-white font-bold text-xs rounded-lg">Lưu Câu Hỏi</button>
+                    <button type="submit" class="px-5 py-2 bg-brand-600 text-white font-bold text-xs rounded-lg" id="btn-save-q-submit">Lưu Cập Nhật</button>
                 </div>
             </form>
         </div>
@@ -355,21 +356,22 @@
     <div id="modal-bulk-import" class="fixed inset-0 bg-slate-900/60 backdrop-blur-sm z-50 hidden flex items-center justify-center p-4">
         <div class="bg-white rounded-2xl max-w-3xl w-full p-6 space-y-4 shadow-2xl">
             <div class="flex justify-between items-center pb-3 border-b border-slate-200">
-                <h3 class="text-lg font-bold text-amber-600"><i class="fa-solid fa-paste"></i> Nhập Ngân Hàng Câu Hỏi Hàng Loạt</h3>
+                <h3 class="text-lg font-bold text-amber-600"><i class="fa-solid fa-paste"></i> Nhập Ngân Hàng Câu Hỏi Hàng Loạt (Gồm Cloze Test)</h3>
                 <button onclick="closeBulkModal()" class="text-slate-400 hover:text-slate-600 text-lg"><i class="fa-solid fa-xmark"></i></button>
             </div>
             <form onsubmit="saveBulkQuestions(event)" class="space-y-4">
                 <div>
                     <label class="block text-xs font-bold text-slate-700 uppercase mb-1">Dạng Bài / Chuyên Đề Mặc Định *</label>
-                    <input type="text" id="tc-bulk-cat" required placeholder="VD: Đồng nghĩa, Viết lại câu, Word Formation..." class="w-full p-2.5 text-sm border border-slate-300 rounded-lg font-bold text-brand-700">
+                    <input type="text" id="tc-bulk-cat" required placeholder="VD: Cloze Test, Đồng nghĩa, Viết lại câu..." class="w-full p-2.5 text-sm border border-slate-300 rounded-lg font-bold text-brand-700">
                 </div>
                 <div>
-                    <label class="block text-xs font-bold text-slate-700 uppercase mb-1">Dán Văn Bản Câu Hỏi (Hỗ trợ **từ in đậm** & Bài đọc) *</label>
-                    <textarea id="tc-bulk-text" required rows="10" class="w-full p-3 text-sm border border-slate-300 rounded-lg font-mono text-xs bg-slate-50" placeholder="[Nếu có Bài đọc dài thì thêm line: Bài đọc: Content...]&#10;Câu 1: The plan was **feasible** so everyone supported it.&#10;A. possible&#10;B. impossible&#10;C. difficult&#10;D. useless&#10;Đáp án: A&#10;Giải thích: feasible = possible (khả thi)&#10;&#10;Câu 2: He completed the test **easily**.&#10;A. with ease&#10;B. with difficult&#10;C. easy&#10;D. ease&#10;Đáp án: A"></textarea>
+                    <label class="block text-xs font-bold text-slate-700 uppercase mb-1">Dán Văn Bản Bài Đọc & Câu Hỏi *</label>
+                    <p class="text-[11px] text-slate-500 mb-2">Thêm dòng <code>Bài đọc: [Đoạn văn...]</code> nếu là bài đục lỗ Cloze Test hoặc Đọc hiểu.</p>
+                    <textarea id="tc-bulk-text" required rows="10" class="w-full p-3 text-sm border border-slate-300 rounded-lg font-mono text-xs bg-slate-50" placeholder="Bài đọc: Education plays a vital role in shaping the future. Students who (1) ______ hard will achieve success. Moreover, (2) ______.&#10;&#10;Câu 1: Chọn phương án đúng cho vị trí (1)&#10;A. study&#10;B. studying&#10;C. studied&#10;D. to study&#10;Đáp án: A&#10;Giải thích: Mệnh đề quan hệ chỉ thói quen/sự thật ở hiện tại.&#10;&#10;Câu 2: Chọn phương án đúng cho vị trí (2)&#10;A. which helps them gain more practical knowledge for their future career&#10;B. it is necessary for schools to provide adequate modern facilities&#10;C. although many challenges still remain unsolved in rural areas&#10;D. despite having spent a large amount of money on educational reform&#10;Đáp án: B"></textarea>
                 </div>
                 <div class="flex justify-end gap-2 pt-3 border-t border-slate-200">
                     <button type="button" onclick="closeBulkModal()" class="px-4 py-2 bg-slate-200 text-slate-700 font-bold text-xs rounded-lg">Hủy</button>
-                    <button type="submit" class="px-5 py-2 bg-amber-500 hover:bg-amber-600 text-white font-bold text-xs rounded-lg">Lưu Hàng Loạt</button>
+                    <button type="submit" class="px-5 py-2 bg-amber-500 hover:bg-amber-600 text-white font-bold text-xs rounded-lg">Phân Tích & Lưu Hàng Loạt</button>
                 </div>
             </form>
         </div>
@@ -393,7 +395,7 @@
         </div>
     </div>
 
-    <!-- JS ENGINE PHÂN TÍCH TỪ IN ĐẬM VÀ CÁC DẠNG BÀI TẬP -->
+    <!-- JS ENGINE PHÂN TÍCH & HIỂN THỊ CLOZE TEST -->
     <script>
         const DEFAULT_USERS = [
             { id: "u_1", name: "Học Sinh Mẫu", role: "student", pass: "123", xp: 100, streak: 3, lastStudyDate: "2026-08-14" },
@@ -404,10 +406,13 @@
         let activeStudentQuiz = { questions: [], userAnswers: [], currentIndex: 0 };
         let mockExamState = { questions: [], userAnswers: [], currentIndex: 0, timerInterval: null, timeLeft: 3000 };
 
-        // Hàm Format Markdown **từ in đậm** thành HTML hiển thị nổi bật
+        // Parsing từ in đậm & Cloze Gaps
         function parseHighlightText(text) {
             if (!text) return "";
-            return text.replace(/\*\*(.*?)\*\*/g, '<span class="q-highlight">$1</span>');
+            let processed = text.replace(/\*\*(.*?)\*\*/g, '<span class="q-highlight">$1</span>');
+            // Đánh dấu các vị trí đục lỗ (1), (2)...
+            processed = processed.replace(/\((\d+)\)\s*_{2,}/g, '<span class="cloze-gap">($1) [.....]</span>');
+            return processed;
         }
 
         window.addEventListener('DOMContentLoaded', () => {
@@ -485,7 +490,6 @@
             }
         }
 
-        // TABS STUDENT
         function switchStudentTab(tab) {
             ['quiz', 'mock', 'essay', 'leaderboard'].forEach(t => { 
                 document.getElementById('st-sec-' + t).classList.add('hidden'); 
@@ -497,7 +501,7 @@
             if (tab === 'essay') renderEssayHistory();
         }
 
-        // --- MODULE QUIZ CƠ BẢN ---
+        // STUDENT QUIZ
         function startStudentQuiz() {
             const cat = document.getElementById('st-quiz-category').value;
             if (cat === 'NONE') { alert("Giáo viên chưa tạo câu hỏi!"); return; }
@@ -522,16 +526,15 @@
             const q = activeStudentQuiz.questions[activeStudentQuiz.currentIndex]; const total = activeStudentQuiz.questions.length;
             document.getElementById('st-quiz-prog').innerText = `Câu ${activeStudentQuiz.currentIndex + 1} / ${total}`;
             
-            // Render Bài đọc nếu có
             const passageBox = document.getElementById('st-quiz-passage-box');
             if (q.passage) {
                 passageBox.classList.remove('hidden');
-                passageBox.innerHTML = `<strong>Đoạn Văn Đọc Hiểu:</strong><br/>${q.passage}`;
+                passageBox.innerHTML = `<span class="text-xs font-bold text-amber-800 uppercase block mb-1"><i class="fa-solid fa-book-open"></i> Đoạn Văn Đục Lỗ / Bài Đọc:</span>${parseHighlightText(q.passage)}`;
             } else {
                 passageBox.classList.add('hidden');
             }
 
-            let optsHtml = q.options.map((opt, i) => `<button onclick="selectStudentOpt(${i})" class="w-full text-left p-3.5 rounded-xl border-2 transition font-medium text-sm flex items-center gap-3 ${activeStudentQuiz.userAnswers[activeStudentQuiz.currentIndex] === i ? 'border-brand-600 bg-brand-50 text-brand-900 font-bold' : 'border-slate-200 bg-slate-50 text-slate-700 hover:bg-slate-100'}"><span class="w-6 h-6 rounded-lg flex items-center justify-center text-xs ${activeStudentQuiz.userAnswers[activeStudentQuiz.currentIndex] === i ? 'bg-brand-600 text-white' : 'bg-slate-200 text-slate-600'}">${String.fromCharCode(65 + i)}</span><span>${parseHighlightText(opt)}</span></button>`).join('');
+            let optsHtml = q.options.map((opt, i) => `<button onclick="selectStudentOpt(${i})" class="w-full text-left p-3.5 rounded-xl border-2 transition font-medium text-sm flex items-start gap-3 ${activeStudentQuiz.userAnswers[activeStudentQuiz.currentIndex] === i ? 'border-brand-600 bg-brand-50 text-brand-900 font-bold' : 'border-slate-200 bg-slate-50 text-slate-700 hover:bg-slate-100'}"><span class="w-6 h-6 rounded-lg flex items-center justify-center text-xs shrink-0 ${activeStudentQuiz.userAnswers[activeStudentQuiz.currentIndex] === i ? 'bg-brand-600 text-white' : 'bg-slate-200 text-slate-600'}">${String.fromCharCode(65 + i)}</span><span class="leading-relaxed">${parseHighlightText(opt)}</span></button>`).join('');
             document.getElementById('st-quiz-content').innerHTML = `<div class="text-xs font-bold text-slate-400 uppercase tracking-wider">${q.category}</div><h4 class="font-bold text-slate-800 text-base leading-snug">${parseHighlightText(q.stem)}</h4><div class="space-y-2 pt-2">${optsHtml}</div>`;
             document.getElementById('st-btn-next').innerText = activeStudentQuiz.currentIndex === total - 1 ? 'Nộp Bài' : 'Câu Tiếp';
         }
@@ -551,7 +554,7 @@
             activeStudentQuiz.currentIndex = Math.max(0, Math.min(total - 1, activeStudentQuiz.currentIndex + dir)); renderStudentQuizCard();
         }
 
-        // --- MODULE THI THỬ & CHẨN ĐOÁN ---
+        // MOCK TEST
         function startFullMockTest() {
             if (dbQuestions.length === 0) { alert("Ngân hàng câu hỏi hiện chưa có dữ liệu!"); return; }
 
@@ -595,14 +598,14 @@
             const passageBox = document.getElementById('mock-passage-box');
             if (q.passage) {
                 passageBox.classList.remove('hidden');
-                passageBox.innerHTML = `<strong>Đoạn Văn Đọc Hiểu:</strong><br/>${q.passage}`;
+                passageBox.innerHTML = `<span class="text-xs font-bold text-amber-800 uppercase block mb-1"><i class="fa-solid fa-book-open"></i> Đoạn Văn Đục Lỗ / Bài Đọc:</span>${parseHighlightText(q.passage)}`;
             } else {
                 passageBox.classList.add('hidden');
             }
 
             let optsHtml = q.options.map((opt, i) => {
                 const isSelected = mockExamState.userAnswers[mockExamState.currentIndex] === i;
-                return `<button onclick="selectMockOpt(${i})" class="w-full text-left p-3.5 rounded-xl border-2 transition font-medium text-sm flex items-center gap-3 ${isSelected ? 'border-brand-600 bg-brand-50 text-brand-900 font-bold' : 'border-slate-200 bg-slate-50 text-slate-700 hover:bg-slate-100'}"><span class="w-6 h-6 rounded-lg flex items-center justify-center text-xs ${isSelected ? 'bg-brand-600 text-white' : 'bg-slate-200 text-slate-600'}">${String.fromCharCode(65 + i)}</span><span>${parseHighlightText(opt)}</span></button>`;
+                return `<button onclick="selectMockOpt(${i})" class="w-full text-left p-3.5 rounded-xl border-2 transition font-medium text-sm flex items-start gap-3 ${isSelected ? 'border-brand-600 bg-brand-50 text-brand-900 font-bold' : 'border-slate-200 bg-slate-50 text-slate-700 hover:bg-slate-100'}"><span class="w-6 h-6 rounded-lg flex items-center justify-center text-xs shrink-0 ${isSelected ? 'bg-brand-600 text-white' : 'bg-slate-200 text-slate-600'}">${String.fromCharCode(65 + i)}</span><span class="leading-relaxed">${parseHighlightText(opt)}</span></button>`;
             }).join('');
 
             document.getElementById('mock-q-display-box').innerHTML = `<h4 class="font-bold text-slate-800 text-base leading-snug">${parseHighlightText(q.stem)}</h4><div class="space-y-2 pt-2">${optsHtml}</div>`;
@@ -662,7 +665,7 @@
             }
         }
 
-        // --- MODULE DỊCH THUẬT & LEADERBOARD ---
+        // ESSAYS & LEADERBOARD
         function populateStudentEssayPrompts() {
             const sel = document.getElementById('st-essay-prompt-select'); sel.innerHTML = '';
             if (dbEssayPrompts.length === 0) { sel.innerHTML = `<option value="NONE">Chưa có đề</option>`; document.getElementById('essay-prompt-display').innerText = ""; return; }
@@ -693,7 +696,7 @@
             document.getElementById('st-stat-rank').innerText = myRank > 0 ? `#${myRank}` : '#--';
         }
 
-        // --- TEACHER CONTROL ---
+        // TEACHER CONTROL
         function switchTeacherTab(tab) {
             ['bank', 'essays', 'students'].forEach(t => { document.getElementById('tc-sec-' + t).classList.add('hidden'); document.getElementById('tc-tab-' + t).className = "py-3 px-5 text-slate-500 hover:text-brand-600 flex items-center gap-2 whitespace-nowrap"; });
             document.getElementById('tc-sec-' + tab).classList.remove('hidden'); document.getElementById('tc-tab-' + tab).className = "py-3 px-5 border-b-2 border-brand-600 text-brand-600 flex items-center gap-2 font-bold whitespace-nowrap";
@@ -707,15 +710,65 @@
             
             const filtered = dbQuestions.filter(q => (q.stem.toLowerCase().includes(s) || q.category.toLowerCase().includes(s)) && (f === 'ALL' || q.category === f));
             c.innerHTML = ''; if (filtered.length === 0) { c.innerHTML = `<p class="p-6 text-center text-sm text-slate-400 bg-white border rounded-xl">Không có dữ liệu</p>`; return; }
+            
             filtered.forEach((q, i) => {
-                c.innerHTML += `<div class="p-4 rounded-xl border border-slate-200 bg-white space-y-2 text-xs shadow-sm"><div class="flex justify-between items-start gap-3"><div><span class="px-2.5 py-0.5 bg-brand-50 text-brand-700 font-bold rounded-full text-[10px]">${q.category}</span><h5 class="font-bold text-slate-800 text-sm mt-1">${i+1}. ${parseHighlightText(q.stem)}</h5></div><button onclick="deleteTeacherQuestion('${q.id}')" class="text-slate-400 hover:text-red-600"><i class="fa-solid fa-trash-can"></i></button></div><div class="flex flex-wrap gap-1 pt-1">${q.options.map((opt, idx) => `<span class="px-2 py-1 rounded ${idx === q.correctIndex ? 'bg-emerald-100 text-emerald-800 font-bold' : 'bg-slate-100 text-slate-600'}">${['A','B','C','D'][idx]}. ${parseHighlightText(opt)}</span>`).join('')}</div>${q.explanation ? `<div class="text-[11px] text-slate-500 italic bg-amber-50 p-2 rounded">${q.explanation}</div>` : ''}</div>`;
+                c.innerHTML += `
+                <div class="p-4 rounded-xl border border-slate-200 bg-white space-y-2 text-xs shadow-sm">
+                    <div class="flex justify-between items-start gap-3">
+                        <div>
+                            <span class="px-2.5 py-0.5 bg-brand-50 text-brand-700 font-bold rounded-full text-[10px]">${q.category}</span>
+                            <h5 class="font-bold text-slate-800 text-sm mt-1">${i+1}. ${parseHighlightText(q.stem)}</h5>
+                        </div>
+                        <div class="flex items-center gap-2">
+                            <button onclick="editTeacherQuestion('${q.id}')" title="Sửa câu hỏi" class="p-1.5 bg-slate-100 hover:bg-brand-50 text-brand-600 rounded-lg transition"><i class="fa-solid fa-pen-to-square"></i></button>
+                            <button onclick="deleteTeacherQuestion('${q.id}')" title="Xóa câu hỏi" class="p-1.5 bg-slate-100 hover:bg-red-50 text-red-600 rounded-lg transition"><i class="fa-solid fa-trash-can"></i></button>
+                        </div>
+                    </div>
+                    ${q.passage ? `<div class="text-[11px] text-slate-600 bg-amber-50/50 p-2 rounded border border-amber-200/60 italic"><b>Đoạn văn đục lỗ/Bài đọc:</b> ${parseHighlightText(q.passage.substring(0, 120))}...</div>` : ''}
+                    <div class="flex flex-col gap-1 pt-1">
+                        ${q.options.map((opt, idx) => `<div class="px-2.5 py-1 rounded ${idx === q.correctIndex ? 'bg-emerald-100 text-emerald-800 font-bold' : 'bg-slate-100 text-slate-600'}">${['A','B','C','D'][idx]}. ${parseHighlightText(opt)}</div>`).join('')}
+                    </div>
+                    ${q.explanation ? `<div class="text-[11px] text-slate-500 italic bg-slate-100 p-2 rounded">${q.explanation}</div>` : ''}
+                </div>`;
             });
         }
 
-        function openTeacherAddQModal() { document.getElementById('modal-teacher-q').classList.remove('hidden'); }
+        function openTeacherAddQModal() { 
+            document.getElementById('tc-q-edit-id').value = "";
+            document.getElementById('modal-teacher-q-title').innerText = "Soạn 1 Câu Hỏi Mới";
+            document.getElementById('btn-save-q-submit').innerText = "Lưu Câu Hỏi";
+            document.getElementById('tc-q-input-cat').value = "";
+            document.getElementById('tc-q-input-passage').value = "";
+            document.getElementById('tc-q-input-stem').value = "";
+            document.getElementById('tc-q-input-correct').value = "0";
+            document.getElementById('tc-q-input-exp').value = "";
+            [0,1,2,3].forEach(i => document.getElementById('tc-q-opt-'+i).value = "");
+            document.getElementById('modal-teacher-q').classList.remove('hidden'); 
+        }
+
+        function editTeacherQuestion(id) {
+            const q = dbQuestions.find(item => item.id === id);
+            if (!q) return;
+
+            document.getElementById('tc-q-edit-id').value = q.id;
+            document.getElementById('modal-teacher-q-title').innerText = "Chỉnh Sửa Câu Hỏi";
+            document.getElementById('btn-save-q-submit').innerText = "Cập Nhật Thay Đổi";
+
+            document.getElementById('tc-q-input-cat').value = q.category || "";
+            document.getElementById('tc-q-input-passage').value = q.passage || "";
+            document.getElementById('tc-q-input-stem').value = q.stem || "";
+            document.getElementById('tc-q-input-correct').value = q.correctIndex;
+            document.getElementById('tc-q-input-exp').value = q.explanation || "";
+            [0,1,2,3].forEach(i => document.getElementById('tc-q-opt-'+i).value = q.options[i] || "");
+
+            document.getElementById('modal-teacher-q').classList.remove('hidden');
+        }
+
         function closeTeacherAddQModal() { document.getElementById('modal-teacher-q').classList.add('hidden'); }
+
         function saveTeacherQuestion(e) {
             e.preventDefault();
+            const editId = document.getElementById('tc-q-edit-id').value;
             const cat = document.getElementById('tc-q-input-cat').value.trim();
             const passage = document.getElementById('tc-q-input-passage').value.trim();
             const stem = document.getElementById('tc-q-input-stem').value.trim();
@@ -723,15 +776,31 @@
             const exp = document.getElementById('tc-q-input-exp').value.trim();
             const opts = [0,1,2,3].map(i => document.getElementById('tc-q-opt-'+i).value.trim());
 
-            dbQuestions.push({ id: 'q_' + Date.now(), category: cat, passage: passage, stem: stem, options: opts, correctIndex: correctIndex, explanation: exp });
-            saveDatabase(); closeTeacherAddQModal(); renderTeacherQuestionBank(); alert("Lưu câu hỏi thành công!");
+            if (editId) {
+                const idx = dbQuestions.findIndex(q => q.id === editId);
+                if (idx !== -1) {
+                    dbQuestions[idx] = { id: editId, category: cat, passage: passage, stem: stem, options: opts, correctIndex: correctIndex, explanation: exp };
+                    alert("Cập nhật thành công!");
+                }
+            } else {
+                dbQuestions.push({ id: 'q_' + Date.now(), category: cat, passage: passage, stem: stem, options: opts, correctIndex: correctIndex, explanation: exp });
+                alert("Lưu câu hỏi thành công!");
+            }
+
+            saveDatabase(); closeTeacherAddQModal(); renderTeacherQuestionBank(); 
         }
-        function deleteTeacherQuestion(id) { if (confirm("Xóa câu hỏi này?")) { dbQuestions = dbQuestions.filter(q => q.id !== id); saveDatabase(); renderTeacherQuestionBank(); } }
+
+        function deleteTeacherQuestion(id) { 
+            if (confirm("Xóa câu hỏi này?")) { 
+                dbQuestions = dbQuestions.filter(q => q.id !== id); 
+                saveDatabase(); renderTeacherQuestionBank(); 
+            } 
+        }
 
         function openBulkModal() { document.getElementById('modal-bulk-import').classList.remove('hidden'); }
         function closeBulkModal() { document.getElementById('modal-bulk-import').classList.add('hidden'); }
         
-        // CẢI TIẾN TRÌNH NHẬP HÀNG LOẠT (NHẬN DIỆN BÀI ĐỌC & TỪ IN ĐẬM)
+        // NHẬP HÀNG LOẠT THÔNG MINH CHO CLOZE TEST
         function saveBulkQuestions(e) {
             e.preventDefault();
             const defaultCat = document.getElementById('tc-bulk-cat').value.trim();
@@ -746,7 +815,6 @@
                 const lines = block.split('\n').map(l => l.trim()).filter(l => l);
                 if (lines.length === 0) return;
 
-                // Nếu khối văn bản bắt đầu bằng "Bài đọc:"
                 if (/^(Bài đọc|Passage)[:\s]*/i.test(lines[0])) {
                     currentPassage = block.replace(/^(Bài đọc|Passage)[:\s]*/i, '').trim();
                     return;
@@ -790,10 +858,15 @@
             const pool = f === 'ALL' ? [...dbQuestions] : dbQuestions.filter(q => q.category === f);
             if (pool.length === 0) { alert("Không có câu hỏi nào!"); return; }
 
-            let html = `<html><head><meta charset="utf-8"><title>Bài Tập - ${f}</title><style>body{font-family: Arial; line-height: 1.6; max-width: 800px; margin: 0 auto; padding: 20px;} .q{margin-bottom: 20px;} .opts{margin-left: 20px; display: grid; grid-template-columns: 1fr 1fr; gap: 5px;} .q-highlight{font-weight:bold; text-decoration:underline;}</style></head><body>`;
+            let html = `<html><head><meta charset="utf-8"><title>Bài Tập - ${f}</title><style>body{font-family: Arial; line-height: 1.6; max-width: 800px; margin: 0 auto; padding: 20px;} .q{margin-bottom: 20px;} .opts{margin-left: 20px; display: grid; grid-template-columns: 1fr 1fr; gap: 5px;} .q-highlight{font-weight:bold; text-decoration:underline;} .cloze-gap{font-weight:bold; color:#d97706;}</style></head><body>`;
             html += `<h2 style="text-align:center;">BÀI TẬP BỔ TRỢ - ${f}</h2><hr/><br/>`;
+            
+            let lastPassage = "";
             pool.forEach((q, i) => {
-                if (q.passage) html += `<div style="background:#f9f9f9; padding:10px; border:1px solid #ddd; margin-bottom:10px;"><b>Bài đọc:</b><br/>${q.passage}</div>`;
+                if (q.passage && q.passage !== lastPassage) {
+                    html += `<div style="background:#fef3c7; padding:15px; border:1px solid #f59e0b; border-radius:8px; margin-bottom:15px;"><b>Đoạn văn đục lỗ/Bài đọc:</b><br/>${parseHighlightText(q.passage)}</div>`;
+                    lastPassage = q.passage;
+                }
                 html += `<div class="q"><b>Câu ${i+1}:</b> ${parseHighlightText(q.stem)} <br><div class="opts">`;
                 ['A', 'B', 'C', 'D'].forEach((char, idx) => { html += `<div>${char}. ${parseHighlightText(q.options[idx])}</div>`; });
                 html += `</div></div>`;
